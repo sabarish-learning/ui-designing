@@ -1,0 +1,88 @@
+<html>
+    <head><style>
+        img{
+            height: 200;
+        }
+    </style>
+<script>
+function addtoCart(){
+
+    addproduct();
+    
+}
+function get_todos() {
+    var todos = new Array;
+    var todos_str = localStorage.getItem('products');
+    if (todos_str != null) {
+        todos = JSON.parse(todos_str); 
+    }
+    return todos;
+}
+function getBase64() {
+    
+    var preview = document.querySelector('img');
+    const file = document.querySelector('input[type="file"]').files[0];
+    
+   var reader = new FileReader();
+   reader.readAsDataURL(file);
+  
+   reader.onload= function () {  
+     
+       document.getElementById("custId").value=reader.result;
+
+       }
+  }
+
+function addproduct(){
+    const file = document.querySelector('input[type="file"]').files[0];
+    var todos = get_todos();
+    var img64=document.getElementById("custId").value;
+    var name=document.getElementById("pname").value;
+    var desc=document.getElementById("pdesc").value;
+    var price=document.getElementById("pprice").value;
+    var qty=document.getElementById("pqty").value;
+    var date=new Date();
+   var item = {Image:img64,Product: name, Description:desc, Price: price, Qty: qty,Date:date.toString()}; 
+    todos.push(item);
+    localStorage.setItem('products', JSON.stringify(todos));
+ show();
+}
+function show(){
+   var view=document.createElement("div");
+   
+  var text=localStorage.getItem("products");
+    var parsedObject = JSON.parse(text);
+    for(i in parsedObject){
+       view.innerHTML = "<br>Image:<img src="+parsedObject[i].Image+" ><br>Product Name:"+parsedObject[i].Product+"<br>Product Description:"+parsedObject[i].Description+"<br>PRICE:"+parsedObject[i].Price+"<br>QTY:"+parsedObject[i].Qty+"<br>DATE:"+parsedObject[i].Date;
+   document.getElementById("prod").appendChild(view);
+   }}
+    function view(){
+        var x = ""
+        var text=localStorage.getItem("products");
+        var parsedObject = JSON.parse(text);
+        for (var i=0; i < parsedObject.length; i++){
+            x +="<br>Image:<img src="+parsedObject[i].Image+"><br>Product Name:"+parsedObject[i].Product+"<br>Product Description:"+parsedObject[i].Description+"<br>PRICE:"+parsedObject[i].Price+"<br>QTY:"+parsedObject[i].Qty+"<br>DATE:"+parsedObject[i].Date+"";
+       document.getElementById("prod").innerHTML = x;
+         }
+         localStorage.clear();
+    }
+  </script>
+    </head>
+    <body>
+        <h1>CART</h1>
+
+    PRODUCT NAME:<input type="text" id="pname" placeholder="enter the product name" >
+    PRODUCT DESC:<input type="text" id="pdesc" placeholder="enter the product desc" >
+    PRODUCT PRICE:<input type="text" id="pprice" placeholder="enter the price" >
+    PRODUCT QTY:<input type="text" id="pqty" placeholder="enter qty" >
+    <input type="file" id="files" onchange="getBase64()"><br>
+    <input type="hidden" id="custId" name="custId" value="3487">
+    <button id="adbtn" onclick="addtoCart()">ADD TO CART</button>
+    <button id="adbtn1" onclick="view()">SHOW</button>
+<div id="prod">
+   
+    </body>
+    <footer>
+
+    </footer>
+</html>
