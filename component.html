@@ -1,0 +1,21 @@
+<div>
+  <form>
+    <b>Permanent Address:</b><br>
+    Street:
+      <input type="text" name="pname" [(ngModel)]="pname"><br>
+       City:
+      <input type="text" name="pcity" [(ngModel)]="pcity" ><br>
+       State:
+      <input  type="text" name="pstate" [(ngModel)]="pstate"><br>
+     
+      <input type="checkbox" name="" (change)="filladdress($event)"> same as above address<br>
+      <b>Current Address:</b><br>
+    Street:
+      <input type="text" name="bname" value="{{bname}}" ><br>
+       City:
+      <input type="text" name="bcity" value="{{bcity}}"><br>
+       State:
+      <input type="text" name="bstate" value="{{bstate}}"><br>
+      </form>
+</div>
+
