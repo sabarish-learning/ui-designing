@@ -1,21 +1,54 @@
+<html>
+  <body>
+   
 <div>
+  <b>
+    Event Binding + Property Binding:
+  </b><br><br>
   <form>
     <b>Permanent Address:</b><br>
     Street:
-      <input type="text" name="pname" [(ngModel)]="pname"><br>
+      <input type="text" name="pname" (input)="pname=$event.target.value"><br>
        City:
-      <input type="text" name="pcity" [(ngModel)]="pcity" ><br>
+      <input type="text" name="pcity" (input)="pcity=$event.target.value" ><br>
        State:
-      <input  type="text" name="pstate" [(ngModel)]="pstate"><br>
+      <input  type="text" name="pstate" (input)="pstate=$event.target.value"><br>
      
       <input type="checkbox" name="" (change)="filladdress($event)"> same as above address<br>
       <b>Current Address:</b><br>
     Street:
-      <input type="text" name="bname" value="{{bname}}" ><br>
+      <input type="text" name="bname" [value]="bname" ><br>
        City:
-      <input type="text" name="bcity" value="{{bcity}}"><br>
+      <input type="text" name="bcity" [value]="bcity"><br>
        State:
-      <input type="text" name="bstate" value="{{bstate}}"><br>
+      <input type="text" name="bstate" [value]="bstate"><br>
       </form>
 </div>
-
+<br>
+<br>
+<wbr>
+<div>
+    <b>
+        Two Binding(ngmodel):
+      </b><br><br>
+    <form>
+      <b>Permanent Address:</b><br>
+      Street:
+        <input type="text" name="name" [(ngModel)]="name"><br>
+         City:
+        <input type="text" name="city" [(ngModel)]="city" ><br>
+         State:
+        <input  type="text" name="state" [(ngModel)]="state"><br>
+       
+        <input type="checkbox"  (change)="filladdress1($event)"> same as above address<br>
+        <b>Current Address:</b><br>
+      Street:
+        <input type="text" name="cname" value="{{cname}}" ><br>
+         City:
+        <input type="text" name="ccity" value="{{ccity}}"><br>
+         State:
+        <input type="text" name="cstate" value="{{cstate}}"><br>
+        </form>
+  </div>
+  </body>
+</html>
