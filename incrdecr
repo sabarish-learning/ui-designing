@@ -1,0 +1,12 @@
+<html>
+  <body ng-app="">
+      
+   <button (click)="count=count+1">
++
+   </button>
+   <button (click)="count=count-1">
+_
+   </button>
+   <div [ngClass]="count>=10?'c1':'c2'" >circle{{count}}</div>
+  </body>
+</html>
