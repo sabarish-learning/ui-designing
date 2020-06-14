@@ -1,26 +1,62 @@
 <html>
     <head>
-            <p style="text-align:right ">Translate this page:</p>
-            
-            <div id="google_translate_element" style="text-align:right ">  </div>  
-        <style>
-        img{
-            height: 50;
+            <style>
+      .cart{
+        background-color: aquamarine;
+      }
+      .local{
+        background-color: aquamarine;
+      }
+      img{
+          height: 100px;
         }
         body{
             float: left;
-            
-        }
+            clear: both;
+            }
     </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
   <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
   <script type="text/javascript">
-    function googleTranslateElementInit() {
-      new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+     function googleTranslateElementInit() {
+      new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.FloatPosition.TOP_LEFT}, 'google_translate_element');
     }
-    </script>
+
+    function triggerHtmlEvent(element, eventName) {
+      var event;
+      if (document.createEvent) {
+        event = document.createEvent('HTMLEvents');
+        event.initEvent(eventName, true, true);
+        element.dispatchEvent(event);
+      } else {
+        event = document.createEventObject();
+        event.eventType = eventName;
+        element.fireEvent('on' + event.eventType, event);
+      }
+    }
+    $(document).ready(function(){ 
+      $('.lang-select').click(function() {
+      var theLang =$(this).attr('data-lang');
+      $('.goog-te-combo').val(theLang);
+ window.location = $(this).attr('href');
+   location.reload(); 
+  });});
+  </script>
 <script>
 function addtoCart(){
-addproduct();
+var name=document.getElementById("pname").value;
+  var desc=document.getElementById("pdesc").value;
+    var price=document.getElementById("pprice").value;
+    var qty=document.getElementById("pqty").value;
+    var img64=document.getElementById("custId").value;
+if (name==0||desc==0||price==0||qty== 0||img64==0)  {
+  alert('PLEASE FILL THE CART DETAILS');
+    }else{
+     addproduct();
+  }
     }
 function get_todos() {
     var todos = new Array;
@@ -28,24 +64,17 @@ function get_todos() {
     if (todos_str != null) {
         todos = JSON.parse(todos_str); 
     }
-    return todos;
+ return todos;
 }
 function getBase64() {
-    
-    var preview = document.querySelector('img');
+      var preview = document.querySelector('img');
     const file = document.querySelector('input[type="file"]').files[0];
-    
    var reader = new FileReader();
    reader.readAsDataURL(file);
-  
-   reader.onload= function () {  
-     
-       document.getElementById("custId").value=reader.result;
-
-       }
-  }
-  
-function addproduct(){
+  reader.onload= function () {  
+     document.getElementById("custId").value=reader.result;
+  }  }
+  function addproduct(){
     const file = document.querySelector('input[type="file"]').files[0];
     var todos = get_todos();
     var img64=document.getElementById("custId").value;
@@ -57,37 +86,28 @@ function addproduct(){
    var alertff= setTimeout(function() {
     alert('added product 30 min'+name); 
   }, 60*1000)
-
-   var item = {Image:img64,Product: name, Description:desc, Price: price, Qty: qty,Date:date.toString(),Alert:alertff}; 
-    todos.push(item);
-    localStorage.setItem('products', JSON.stringify(todos));
-    document.getElementById("custId").value="";
- show();
+var item = {Product: name, Description:desc, Price: price, Qty: qty,Image:img64,Date:date.toString(),Alert:alertff};
+  todos.push(item);
+  localStorage.setItem('products', JSON.stringify(todos));
+document.getElementById("custId").value="";
+show();
 }
 function show(){
- var y=""
+ var y="";
 var text=localStorage.getItem("products");
     var parsedObject = JSON.parse(text);
-    
     for(var i=0;i<parsedObject.length;i++)
     {
-      y += "<br>Image:<img src="+parsedObject[i].Image+"><br>Product Name:"+parsedObject[i].Product+"<br>Product Description:"+parsedObject[i].Description+"<br>PRICE:"+parsedObject[i].Price+"<br>QTY:"+parsedObject[i].Qty+"<br>DATE:"+parsedObject[i].Date+"<button class='remove' id="+i+">remove</button>";
+      y += "<div class='card col-lg-5 col-md-3 col-sm-4 col-6'><img src="+parsedObject[i].Image+" class='card-img-top'><div class='card-body'><h5 class='card-title'>Product Name:"+parsedObject[i].Product+"</h5><p class='card-text'>Product Description:"+parsedObject[i].Description+"</p> <p class='card-text'>PRICE:"+parsedObject[i].Price+"</p><p class='card-text'>QTY:"+parsedObject[i].Qty+"</p><p class='card-text'>DATE:"+parsedObject[i].Date+"</p><button class='remove' id="+i+">remove</button></div></div>";
    document.getElementById("prod").innerHTML = y;
-     
-  
-   
-   }
+     }
    document.getElementById('prod').innerHTML = y;
   var button= document.getElementsByClassName('remove');
    for(i=0;i<button.length;i++){
 button[i].addEventListener('click',remove);
    }
-  
-   }
-   
-  
+ }
    function remove(){
-     
       var id=this.getAttribute('id');
       var todos = get_todos();
       todos.splice(id,1);
@@ -96,53 +116,58 @@ button[i].addEventListener('click',remove);
     //view();
       return false;
    }
- 
-      
-    function view(){
-        var x = ""
+ function view(){
+        var x = "";
         var text=localStorage.getItem("products");
         var parsedObject = JSON.parse(text);
         for (var i=0; i < parsedObject.length; i++){
-            x +="<br>Image:<img src="+parsedObject[i].Image+"><br>Product Name:"+parsedObject[i].Product+"<br>Product Description:"+parsedObject[i].Description+"<br>PRICE:"+parsedObject[i].Price+"<br>QTY:"+parsedObject[i].Qty+"<br>DATE:"+parsedObject[i].Date+"<button class='remove' id="+i+">remove</button>";
-       document.getElementById("prod").innerHTML = x;
+            x +="<div class='card col-lg-5 col-md-3 col-sm-4 col-6'><img src="+parsedObject[i].Image+" class='card-img-top'><div class='card-body'><h5 class='card-title'>Product Name:"+parsedObject[i].Product+"</h5><p class='card-text'>Product Description:"+parsedObject[i].Description+"</p> <p class='card-text'>PRICE:"+parsedObject[i].Price+"</p><p class='card-text'>QTY:"+parsedObject[i].Qty+"</p><p class='card-text'>DATE:"+parsedObject[i].Date+"</p><button class='remove' id="+i+">remove</button></div></div>";
+       document.getElementById("prodview").innerHTML = x;
          }
-         document.getElementById('prod').innerHTML = x;
+         document.getElementById('prodview').innerHTML = x;
   var button= document.getElementsByClassName('remove');
    for(i=0;i<button.length;i++){
 button[i].addEventListener('click',remove1);
    }
     }
     function remove1(){
-     
      var id=this.getAttribute('id');
      var todos = get_todos();
      todos.splice(id,1);
      localStorage.setItem("products",JSON.stringify(todos));
-   
    view();
      return false;
   }
     function getClear(){
-
-        localStorage.clear();
+localStorage.clear();
     }
-    
-
-  </script>
+     </script>
     </head>
     <body>
+   Translate to:<a href="#googtrans(en|en)" class="lang-en lang-select" data-lang="en">ENGLISH</a>
+      <a href="#googtrans(en|fr)" class="lang-es lang-select" data-lang="fr">FRENCH</a>
+      <a href="#googtrans(en|zh-CN)" class="lang-es lang-select" data-lang="zh-CN">CHINESE</a>
+      <div class="cart" >
         <h1>CART</h1>
-
-    PRODUCT NAME:<input type="text" id="pname" placeholder="enter the product name" >
-    PRODUCT DESC:<input type="text" id="pdesc" placeholder="enter the product desc" >
-    PRODUCT PRICE:<input type="text" id="pprice" placeholder="enter the price" >
-    PRODUCT QTY:<input type="text" id="pqty" placeholder="enter qty" >
+    PRODUCT NAME:<input type="text" id="pname" placeholder="enter the product name" ><br>
+    PRODUCT DESC:<input type="text" id="pdesc" placeholder="enter the product desc" ><br>
+    PRODUCT PRICE:<input type="text" id="pprice" placeholder="enter the price" ><br>
+    PRODUCT QTY:<input type="text" id="pqty" placeholder="enter qty" ><br>
     <input type="file" id="files" onchange="getBase64()"><br>
     <input type="hidden" id="custId" name="custId">
     <button id="adbtn" onclick="addtoCart()">ADD TO CART</button>
     <button id="adbtn1" onclick="view()">VIEW LOCAL STORAGE</button>
     <button onclick="getClear()">CLEAR</button>
-<div id="prod">
+        </div>
+  <br>
+    <br>
+<div class="container">
+<div class="card-deck" id="prod"></div>
+</div><br>
+<h1 class="local">LOCAL STORAGE:</h1>
+<div class="container">
+<div class="card-deck" id="prodview"></div>
+</div>
        </body>
     <footer>
           
