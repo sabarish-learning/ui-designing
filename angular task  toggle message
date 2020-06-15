@@ -9,9 +9,9 @@ IN COMPONENTS.HTML
       {{anchorName}}
     </a>
   
-  <ng-container *ngIf="show">
+  <div *ngIf="show">
      <p>Click the button to swap the text of the paragraph element:</p>
-  </ng-container>
+  </div>
  </body>
   </html>
   
