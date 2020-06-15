@@ -31,8 +31,8 @@ export class AppComponent {
 toggle() {
     this.show = !this.show;
 if(this.show)  
-      this.buttonName = "Hide";
+      this.anchorName = "Hide";
     else
-      this.buttonName = "Show";
+      this.anchorName = "Show";
   }
 }
