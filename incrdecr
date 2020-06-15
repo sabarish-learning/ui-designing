@@ -42,3 +42,11 @@ decre(){
   this.count--;
 }
 }
+In styles.css
+--------------------
+.c1{
+    background-color:red;
+}
+.c2{
+    background-color:green;
+}
