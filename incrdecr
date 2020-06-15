@@ -1,12 +1,44 @@
+
+IN COMPONENTS.HTML
+-------------------------------------------
 <html>
   <body ng-app="">
-      
-   <button (click)="count=count+1">
-+
-   </button>
-   <button (click)="count=count-1">
+ 
+   <button (click)="decre()">
 _
    </button>
-   <div [ngClass]="count>=10?'c1':'c2'" >circle{{count}}</div>
+        
+   <button (click)="incre()">
+    +
+       </button>
+   <div [ngClass]="(count>10)?'c1':'c2'">circle{{count}}</div>
+  
   </body>
 </html>
+
+IN COMPONENTS.TS
+--------------------------------------------------------
+import { Component, OnInit } from '@angular/core';
+import {NgForm} from '@angular/forms';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+styleUrls: ['./app.component.css']
+})
+export class AppComponent implements OnInit{
+ count:any='';
+ 
+ngOnInit(){
+this.count='0';
+
+}
+incre(){
+  this.count++;
+  
+}
+decre(){
+ 
+  this.count--;
+}
+}
