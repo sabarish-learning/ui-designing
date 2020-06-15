@@ -1,0 +1,38 @@
+IN COMPONENTS.HTML
+-----------------------------------------
+<html>
+  <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <a (click)="toggle()" >
+      {{anchorName}}
+    </a>
+  
+  <ng-container *ngIf="show">
+     <p>Click the button to swap the text of the paragraph element:</p>
+  </ng-container>
+ </body>
+  </html>
+  
+  IN COMPONENTS.TS
+  --------------------------------------------------------
+  import { Component } from '@angular/core';
+import {NgForm} from '@angular/forms';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  public show:boolean = false;
+  public anchorName:any = 'Show';
+toggle() {
+    this.show = !this.show;
+if(this.show)  
+      this.buttonName = "Hide";
+    else
+      this.buttonName = "Show";
+  }
+}
