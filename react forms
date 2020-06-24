@@ -37,7 +37,7 @@ this.AddRow=this.AddRow.bind(this);
 
   changeInput(event){
    
-    this.setState({[event.target.name]:event.target.value}) // getting value using input name attribute
+    this.setState({[event.target.name]: event.target.type === 'number' ? parseInt(event.target.value) :event.target.value}) // getting value using input name attribute
   }
 
   AddRow(event){
@@ -185,7 +185,7 @@ render(){
         <form onSubmit={this.props.AddRow}>
          Name: <input type='text' name="name"  onChange={this.props.changeInput}/><br/>
       Designation:<input type='text' name="design1" onChange={this.props.changeInput}/><br/>
-         Age:<input type='text' name="age1" onChange={this.props.changeInput}/><br/>
+         Age:<input type='text' type="number" name="age1" onChange={this.props.changeInput}/><br/>
          <input type="submit" value="Add" />
         </form>
         </div>
